@@ -363,8 +363,8 @@ Se solicita modelar el sistema utilizando la técnica de **Diagrama de Flujo de 
 | Entidad | Rol frente al sistema | Qué envía / qué recibe |
 | --- | --- | --- |
 | **Usuario No Registrado** | Persona interesada que todavía no es socio: se registra con sus datos y el tipo de membresía y debe pagarla con tarjeta para completar el registro. Al aprobarse el pago pasa a ser Socio. | Envía la solicitud de registro y los datos de la tarjeta. Recibe el resultado del pago (membresía habilitada o error por pago rechazado). |
-| **Socio** | Persona ya registrada: renueva su membresía, inicia sesión, consulta actividades y reserva clases. | Envía datos de tarjeta y renovación, datos de acceso, pedidos de reserva, consulta y cancelación. Recibe resultado del pago, datos personales, listados y notificaciones. |
-| **Profesor** | Inicia sesión, consulta sus datos personales y las clases que tiene asignadas con sus inscriptos. | Envía datos de acceso y la consulta de clases. Recibe sus datos personales y las clases asignadas. |
+| **Socio** | Persona ya registrada: renueva su membresía, inicia sesión, consulta actividades y reserva clases. | Envía datos de tarjeta y renovación, datos de acceso, consulta de datos personales, pedidos de reserva, consulta y cancelación. Recibe resultado del pago, datos personales, listados y notificaciones. |
+| **Profesor** | Inicia sesión, consulta sus datos personales y las clases que tiene asignadas con sus inscriptos. | Envía datos de acceso y consultas (datos personales y clases asignadas). Recibe sus datos personales y las clases asignadas. |
 | **Empleado** | Administra las actividades y consulta socios y el estado de sus membresías. | Envía datos de actividad y consulta de socios. Recibe el listado de socios. |
 | **Gerencia** | Consulta reportes de gestión. | Envía solicitud de reporte. Recibe cantidad de socios y actividades con más reservas. |
 | **Servicio de Validación de Tarjetas** | Servicio externo que aprueba o rechaza las transacciones con tarjeta de crédito. | Recibe los datos de la tarjeta y el importe; devuelve la aprobación o el rechazo. |
@@ -400,7 +400,8 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 | `Solicitud_Validación_Pago` | Sistema (0) | Servicio de Validación de Tarjetas | Datos de la tarjeta e importe enviados al servicio de validación externa. |
 | `Resultado_Pago` | Sistema (0) | Usuario No Registrado, Socio | Confirmación de la operación (membresía habilitada o renovada) o error por pago rechazado. |
 | `Datos_Acceso` | Socio, Profesor | Sistema (0) | Datos con los que el usuario se identifica para iniciar sesión. |
-| `Datos_Personales` | Sistema (0) | Socio, Profesor | Datos personales del socio o del profesor que inició sesión. |
+| `Consulta_Datos_Personales` | Socio, Profesor | Sistema (0) | Pedido de consulta de los datos personales propios. |
+| `Datos_Personales` | Sistema (0) | Socio, Profesor | Datos personales del socio o del profesor. |
 | `Datos_Actividad` | Empleado | Sistema (0) | Alta o modificación de una actividad: código, denominación, tipo, profesores, horarios, lugar y cupos. |
 | `Listado_Actividades` | Sistema (0) | Socio | Nombre, profesor responsable, días y horarios y lugares disponibles de cada actividad. |
 | `Solicitud_Reserva` | Socio | Sistema (0) | Pedido de reservar un lugar en una clase. |
@@ -418,7 +419,7 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 
 ##### Nivel 1
 
-Descompone el proceso 0 en 7 procesos y agrega los almacenamientos que comparten. Los 22 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior.
+Descompone el proceso 0 en 7 procesos y agrega los almacenamientos que comparten. Los 23 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior.
 
 ![Nivel 1 — Gestión de un Gimnasio](diagramas/c2-nivel1.png)
 
@@ -522,4 +523,4 @@ Datos elementales (longitud y formato son propuestas de diseño: el enunciado so
 - El importe a cobrar surge del tipo de membresía elegido o renovado; no se modela una tarifa aparte.
 - Los pedidos de datos de tarjeta que hace el sistema son interfaz de usuario y no se dibujan: el flujo esencial es `Datos_Tarjeta`.
 - La cantidad de lugares se descuenta al reservar y se devuelve al cancelar, para poder informar "clase completa".
-- Para no sobrecargar el contexto se omiten el resultado del inicio de sesión y los pedidos de datos personales y de actividades: esa información se entrega sin un pedido explícito, como los reportes en la solución de la cátedra (Obra Social).
+- Para no sobrecargar el contexto se omiten el resultado del inicio de sesión y el pedido de actividades: esa información se entrega sin un pedido explícito, como los reportes en la solución de la cátedra (Obra Social).

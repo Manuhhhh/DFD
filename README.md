@@ -362,7 +362,8 @@ Se solicita modelar el sistema utilizando la técnica de **Diagrama de Flujo de 
 
 | Entidad | Rol frente al sistema | Qué envía / qué recibe |
 | --- | --- | --- |
-| **Socio** | Persona interesada que se registra, paga su membresía y, ya registrada, consulta actividades y reserva clases. | Envía solicitud de registro, datos de tarjeta, renovación, datos de acceso, pedidos de reserva, consulta y cancelación. Recibe resultado del pago, datos personales, listados y notificaciones. |
+| **Usuario No Registrado** | Persona interesada que todavía no es socio: se registra con sus datos y el tipo de membresía y debe pagarla con tarjeta para completar el registro. Al aprobarse el pago pasa a ser Socio. | Envía la solicitud de registro y los datos de la tarjeta. Recibe el resultado del pago (membresía habilitada o error por pago rechazado). |
+| **Socio** | Persona ya registrada: renueva su membresía, inicia sesión, consulta actividades y reserva clases. | Envía datos de tarjeta y renovación, datos de acceso, pedidos de reserva, consulta y cancelación. Recibe resultado del pago, datos personales, listados y notificaciones. |
 | **Profesor** | Inicia sesión, consulta sus datos personales y las clases que tiene asignadas con sus inscriptos. | Envía datos de acceso y la consulta de clases. Recibe sus datos personales y las clases asignadas. |
 | **Empleado** | Administra las actividades y consulta socios y el estado de sus membresías. | Envía datos de actividad y consulta de socios. Recibe el listado de socios. |
 | **Gerencia** | Consulta reportes de gestión. | Envía solicitud de reporte. Recibe cantidad de socios y actividades con más reservas. |
@@ -374,7 +375,7 @@ No son entidades (están dentro del sistema): **Actividad**, **Reserva** y **Mem
 
 | N° | Proceso | Qué hace |
 | --- | --- | --- |
-| 1 | **Gestionar Membresías** | Registro del socio con su tipo de membresía, cobro obligatorio con tarjeta de crédito (validación externa) y renovación. |
+| 1 | **Gestionar Membresías** | Registro del Usuario No Registrado con su tipo de membresía, cobro obligatorio con tarjeta de crédito (validación externa) y renovación de la membresía del Socio. |
 | 2 | **Administrar Usuarios** | Inicio de sesión del socio y del profesor y consulta de sus datos personales. |
 | 3 | **Gestionar Actividades** | Alta y modificación de actividades (horarios, profesores, cupos) y listado de las actividades ofrecidas. |
 | 4 | **Gestionar Reservas** | Reserva, consulta y cancelación de reservas; notificación al socio. |
@@ -392,12 +393,12 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 
 | Flujo | Origen | Destino | Descripción |
 | --- | --- | --- | --- |
-| `Solicitud_Registro` | Socio | Sistema (0) | Datos personales de la persona interesada y tipo de membresía elegido. |
-| `Datos_Tarjeta` | Socio | Sistema (0) | Datos de la tarjeta de crédito con la que se paga el registro o la renovación. |
+| `Solicitud_Registro` | Usuario No Registrado | Sistema (0) | Datos personales de la persona interesada y tipo de membresía elegido. |
+| `Datos_Tarjeta` | Usuario No Registrado, Socio | Sistema (0) | Datos de la tarjeta de crédito con la que se paga el registro o la renovación. |
 | `Solicitud_Renovación` | Socio | Sistema (0) | Pedido del socio de renovar su membresía. |
 | `Resultado_Validación` | Servicio de Validación de Tarjetas | Sistema (0) | Transacción aprobada o rechazada, informada por el servicio externo. |
 | `Solicitud_Validación_Pago` | Sistema (0) | Servicio de Validación de Tarjetas | Datos de la tarjeta e importe enviados al servicio de validación externa. |
-| `Resultado_Pago` | Sistema (0) | Socio | Confirmación de la operación (membresía habilitada o renovada) o error por pago rechazado. |
+| `Resultado_Pago` | Sistema (0) | Usuario No Registrado, Socio | Confirmación de la operación (membresía habilitada o renovada) o error por pago rechazado. |
 | `Datos_Acceso` | Socio, Profesor | Sistema (0) | Datos con los que el usuario se identifica para iniciar sesión. |
 | `Datos_Personales` | Sistema (0) | Socio, Profesor | Datos personales del socio o del profesor que inició sesión. |
 | `Datos_Actividad` | Empleado | Sistema (0) | Alta o modificación de una actividad: código, denominación, tipo, profesores, horarios, lugar y cupos. |
@@ -515,7 +516,7 @@ Datos elementales (longitud y formato son propuestas de diseño: el enunciado so
 
 #### Supuestos
 
-- La persona interesada se convierte en **Socio** al registrarse, por eso hay una única entidad para ambos momentos.
+- La persona interesada es el **Usuario No Registrado**: se registra y paga la membresía; una vez aprobado el pago pasa a ser **Socio**. Son entidades distintas porque, antes del pago, solo puede registrarse y pagar. Los flujos `Datos_Tarjeta` y `Resultado_Pago` los comparten con el Socio, que los usa para renovar.
 - Solo **Socio** y **Profesor** inician sesión, porque son los "tipos de usuarios" que define el enunciado; el Empleado y la Gerencia interactúan sin proceso de acceso.
 - Los datos del profesor (nombre/s, apellido/s, especialidad) se informan junto con la actividad, por eso el proceso 3 también escribe en `Profesores`.
 - El importe a cobrar surge del tipo de membresía elegido o renovado; no se modela una tarifa aparte.

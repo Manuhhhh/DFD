@@ -101,8 +101,8 @@ Se solicita modelar el sistema considerando las distintas entidades involucradas
 
 | Entidad | Rol frente al sistema | Qué envía / qué recibe |
 | --- | --- | --- |
-| **Jugador** | Persona que crea la cuenta (aspirante), inicia sesión, configura su perfil, paga créditos y juega partidas. | Envía solicitud de alta, datos de acceso, pedidos de pago, de participación y de abandono, jugadas y consultas. Recibe confirmaciones, rechazos, notificaciones, resultados, listado de partidas y ranking. |
-| **Administrador** | Gestiona cuentas, suspende cuentas que incumplen las reglas y consulta partidas y ranking. | Envía datos de acceso, gestión de cuentas, órdenes de suspensión y consultas. Recibe datos de cuentas, confirmación de suspensión, listado de partidas y ranking. |
+| **Jugador** | Persona que crea la cuenta (aspirante), inicia sesión, configura su perfil, paga créditos y juega partidas. | Envía solicitud de alta, datos de acceso, pedidos de pago, de participación y de abandono, jugadas y consultas. Recibe confirmaciones, rechazos, resultados, listado de partidas y ranking. |
+| **Administrador** | Gestiona cuentas, suspende cuentas que incumplen las reglas y consulta partidas y ranking. | Envía gestión de cuentas, órdenes de suspensión y consultas. Recibe datos de cuentas, listado de partidas y ranking. |
 | **Medio de Pago** | Organización externa por la que el jugador abona sus créditos (cualquier medio de pago). | Recibe la solicitud de cobro y devuelve su aprobación o rechazo. |
 
 No son entidades (están dentro del sistema): **Partida**, **Historial** y **Ranking** son datos que el sistema guarda (almacenes), y **Redes Sociales**, **Documento**, **Alias** o **Avatar** son atributos de la cuenta.
@@ -111,7 +111,7 @@ No son entidades (están dentro del sistema): **Partida**, **Historial** y **Ran
 
 | N° | Proceso | Qué hace |
 | --- | --- | --- |
-| 1 | **Administrar Cuentas** | Alta de cuenta, inicio de sesión y gestión de cuentas (perfil, consulta y modificación) por el Jugador y el Administrador. |
+| 1 | **Administrar Cuentas** | Alta de cuenta e inicio de sesión del Jugador; gestión de cuentas (perfil, consulta y modificación) por el Jugador y el Administrador. |
 | 2 | **Gestionar Pago de Créditos** | Pago de créditos con cualquier medio de pago y acreditación del saldo en la cuenta. |
 | 3 | **Gestionar Partidas** | Creación y unión a partidas, verificación de condiciones, registro de resultados y abandonos, cierre de la partida. |
 | 4 | **Suspender Cuentas** | Suspensión temporal de cuentas que incumplen las reglas de la plataforma. |
@@ -128,10 +128,9 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 | Flujo | Origen | Destino | Descripción |
 | --- | --- | --- | --- |
 | `Solicitud_Alta_Cuenta` | Jugador | Sistema (0) | Datos con los que una persona abre su cuenta (ver diccionario). |
-| `Datos_Acceso` | Jugador, Administrador | Sistema (0) | Datos con los que el usuario se identifica para iniciar sesión. |
+| `Datos_Acceso` | Jugador | Sistema (0) | Datos con los que el jugador se identifica para iniciar sesión. |
 | `Solicitud_Gestión_Cuenta` | Jugador, Administrador | Sistema (0) | Pedido de configurar el perfil, consultar o modificar una cuenta. |
 | `Confirmación_Alta_Cuenta` | Sistema (0) | Jugador | Confirma la cuenta creada y habilita la opción de Pago de Créditos. |
-| `Resultado_Acceso` | Sistema (0) | Jugador, Administrador | Resultado de la autenticación (sesión iniciada o acceso rechazado). |
 | `Datos_Cuenta` | Sistema (0) | Jugador, Administrador | Datos de la cuenta consultada y confirmación de los cambios realizados. |
 | `Solicitud_Pago_Créditos` | Jugador | Sistema (0) | Cantidad de créditos a comprar y medio de pago elegido. |
 | `Resultado_Cobro` | Medio de Pago | Sistema (0) | Aprobación o rechazo del cobro informado por el medio de pago. |
@@ -141,10 +140,8 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 | `Solicitud_Abandono` | Jugador | Sistema (0) | Decisión del jugador de abandonar la partida (antes de que comience o durante el juego). |
 | `Jugadas` | Jugador | Sistema (0) | Acciones del jugador durante la partida. |
 | `Rechazo_Participación` | Sistema (0) | Jugador | Motivo por el que no se puede participar (sin lugares, cuenta suspendida o créditos insuficientes). |
-| `Notificación_Inicio_Partida` | Sistema (0) | Jugador | Aviso de que se cumplieron las condiciones y la partida comienza. |
 | `Resultado_Partida` | Sistema (0) | Jugador | Resultado obtenido por el jugador al finalizar la partida (o por abandono). |
 | `Orden_Suspensión` | Administrador | Sistema (0) | Cuenta a suspender, motivo y período de suspensión. |
-| `Confirmación_Suspensión` | Sistema (0) | Administrador | Confirma la suspensión registrada. |
 | `Consulta_Partidas` | Jugador, Administrador | Sistema (0) | Pedido de consulta de las partidas realizadas. |
 | `Consulta_Ranking` | Jugador, Administrador | Sistema (0) | Pedido de consulta del ranking general. |
 | `Listado_Partidas` | Sistema (0) | Jugador, Administrador | Partidas realizadas y sus resultados. |
@@ -152,7 +149,7 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 
 ##### Nivel 1
 
-Descompone el proceso 0 en 5 procesos y agrega los almacenamientos que comparten. Los 22 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior.
+Descompone el proceso 0 en 5 procesos y agrega los almacenamientos que comparten. Los 19 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior.
 
 ![Nivel 1 — Videojuego en Línea](diagramas/c1-nivel1.png)
 
@@ -174,7 +171,7 @@ Se detalla el proceso **3 Gestionar Partidas** por ser el que concentra las regl
 | --- | --- | --- |
 | 3.1 | **Validar Participación** | Verifica lugares disponibles, que la cuenta no esté suspendida y que tenga créditos suficientes. |
 | 3.2 | **Registrar Participación** | Crea la partida o suma al jugador a una partida existente. |
-| 3.3 | **Verificar Condiciones de Inicio** | Verifica que los jugadores estén conectados y que se alcance el mínimo de participantes; habilita el comienzo. |
+| 3.3 | **Verificar Condiciones de Inicio** | Verifica que los jugadores estén conectados y que se alcance el mínimo de participantes; habilita el comienzo de la partida. |
 | 3.4 | **Registrar Abandono** | Registra el abandono (antes del comienzo o durante el juego) y actualiza el resultado del jugador. |
 | 3.5 | **Registrar Resultados** | Registra los resultados obtenidos por cada jugador durante el juego. |
 | 3.6 | **Finalizar Partida** | Cierra la partida, actualiza el historial y el ranking, y comunica el resultado. |
@@ -192,7 +189,6 @@ Flujos entre procesos de esta figura:
 | --- | --- | --- | --- |
 | `Solicitud_Participación` | Entrada | proceso 3 | 3.1 |
 | `Rechazo_Participación` | Salida | proceso 3 | 3.1 |
-| `Notificación_Inicio_Partida` | Salida | proceso 3 | 3.3 |
 | `Solicitud_Abandono` | Entrada | proceso 3 | 3.4 |
 | `Jugadas` | Entrada | proceso 3 | 3.5 |
 | `Resultado_Partida` | Salida | proceso 3 | 3.6 |
@@ -256,6 +252,7 @@ Datos elementales (longitud y formato son propuestas de diseño: el enunciado so
 - Esperar a que comience la partida no genera ningún flujo: solo el abandono es un dato nuevo.
 - El enunciado exige que el jugador "cuente con los créditos necesarios"; solo se verifica el saldo, no se modela un descuento porque no se indica.
 - Los tipos de documento `DNI | Pasaporte` son los del ejemplo de la cátedra.
+- Para no sobrecargar el contexto se omiten flujos que no agregan información propia: el resultado del inicio de sesión (la sesión queda registrada en `Sesiones`), el acceso del Administrador y el aviso de inicio de partida (el enunciado solo habla de sesión del Jugador y de que la partida "podrá comenzar") y la confirmación de la suspensión.
 
 ---
 
@@ -363,8 +360,8 @@ Se solicita modelar el sistema utilizando la técnica de **Diagrama de Flujo de 
 
 | Entidad | Rol frente al sistema | Qué envía / qué recibe |
 | --- | --- | --- |
-| **Socio** | Persona interesada que se registra, paga su membresía y, ya registrada, consulta actividades y reserva clases. | Envía solicitud de registro, datos de tarjeta, renovación, datos de acceso, consultas y pedidos de reserva y cancelación. Recibe resultado del pago, datos personales, listados y notificaciones. |
-| **Profesor** | Inicia sesión, consulta sus datos personales y las clases que tiene asignadas con sus inscriptos. | Envía datos de acceso y consultas. Recibe resultado del acceso, datos personales y clases asignadas. |
+| **Socio** | Persona interesada que se registra, paga su membresía y, ya registrada, consulta actividades y reserva clases. | Envía solicitud de registro, datos de tarjeta, renovación, datos de acceso, pedidos de reserva, consulta y cancelación. Recibe resultado del pago, datos personales, listados y notificaciones. |
+| **Profesor** | Inicia sesión, consulta sus datos personales y las clases que tiene asignadas con sus inscriptos. | Envía datos de acceso y la consulta de clases. Recibe sus datos personales y las clases asignadas. |
 | **Empleado** | Administra las actividades y consulta socios y el estado de sus membresías. | Envía datos de actividad y consulta de socios. Recibe el listado de socios. |
 | **Gerencia** | Consulta reportes de gestión. | Envía solicitud de reporte. Recibe cantidad de socios y actividades con más reservas. |
 | **Servicio de Validación de Tarjetas** | Servicio externo que aprueba o rechaza las transacciones con tarjeta de crédito. | Recibe los datos de la tarjeta y el importe; devuelve la aprobación o el rechazo. |
@@ -376,8 +373,8 @@ No son entidades (están dentro del sistema): **Actividad**, **Reserva** y **Mem
 | N° | Proceso | Qué hace |
 | --- | --- | --- |
 | 1 | **Gestionar Membresías** | Registro del socio con su tipo de membresía, cobro obligatorio con tarjeta de crédito (validación externa) y renovación. |
-| 2 | **Administrar Usuarios** | Inicio de sesión y consulta de datos personales de socios y profesores. |
-| 3 | **Gestionar Actividades** | Alta y modificación de actividades (horarios, profesores, cupos) y consulta de las actividades ofrecidas. |
+| 2 | **Administrar Usuarios** | Inicio de sesión del socio y del profesor y consulta de sus datos personales. |
+| 3 | **Gestionar Actividades** | Alta y modificación de actividades (horarios, profesores, cupos) y listado de las actividades ofrecidas. |
 | 4 | **Gestionar Reservas** | Reserva, consulta y cancelación de reservas; notificación al socio. |
 | 5 | **Consultar Clases Asignadas** | Consulta de las clases asignadas al profesor y de los socios inscriptos en ellas. |
 | 6 | **Consultar Socios** | Listado de socios y verificación del estado de sus membresías. |
@@ -400,11 +397,8 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 | `Solicitud_Validación_Pago` | Sistema (0) | Servicio de Validación de Tarjetas | Datos de la tarjeta e importe enviados al servicio de validación externa. |
 | `Resultado_Pago` | Sistema (0) | Socio | Confirmación de la operación (membresía habilitada o renovada) o error por pago rechazado. |
 | `Datos_Acceso` | Socio, Profesor | Sistema (0) | Datos con los que el usuario se identifica para iniciar sesión. |
-| `Consulta_Datos_Personales` | Socio, Profesor | Sistema (0) | Pedido de consulta de los datos personales propios. |
-| `Resultado_Acceso` | Sistema (0) | Socio, Profesor | Resultado de la autenticación (sesión iniciada o acceso rechazado). |
-| `Datos_Personales` | Sistema (0) | Socio, Profesor | Datos personales del socio o del profesor. |
+| `Datos_Personales` | Sistema (0) | Socio, Profesor | Datos personales del socio o del profesor que inició sesión. |
 | `Datos_Actividad` | Empleado | Sistema (0) | Alta o modificación de una actividad: código, denominación, tipo, profesores, horarios, lugar y cupos. |
-| `Consulta_Actividades` | Socio | Sistema (0) | Pedido de consulta de las actividades ofrecidas. |
 | `Listado_Actividades` | Sistema (0) | Socio | Nombre, profesor responsable, días y horarios y lugares disponibles de cada actividad. |
 | `Solicitud_Reserva` | Socio | Sistema (0) | Pedido de reservar un lugar en una clase. |
 | `Consulta_Reservas` | Socio | Sistema (0) | Pedido de consulta de las reservas del socio. |
@@ -421,7 +415,7 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 
 ##### Nivel 1
 
-Descompone el proceso 0 en 7 procesos y agrega los almacenamientos que comparten. Los 25 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior.
+Descompone el proceso 0 en 7 procesos y agrega los almacenamientos que comparten. Los 22 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior.
 
 ![Nivel 1 — Gestión de un Gimnasio](diagramas/c2-nivel1.png)
 
@@ -525,3 +519,4 @@ Datos elementales (longitud y formato son propuestas de diseño: el enunciado so
 - El importe a cobrar surge del tipo de membresía elegido o renovado; no se modela una tarifa aparte.
 - Los pedidos de datos de tarjeta que hace el sistema son interfaz de usuario y no se dibujan: el flujo esencial es `Datos_Tarjeta`.
 - La cantidad de lugares se descuenta al reservar y se devuelve al cancelar, para poder informar "clase completa".
+- Para no sobrecargar el contexto se omiten el resultado del inicio de sesión y los pedidos de datos personales y de actividades: esa información se entrega sin un pedido explícito, como los reportes en la solución de la cátedra (Obra Social).

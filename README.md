@@ -101,9 +101,10 @@ Se solicita modelar el sistema considerando las distintas entidades involucradas
 
 | Entidad | Rol frente al sistema | Qué envía / qué recibe |
 | --- | --- | --- |
-| **Jugador** | Persona que crea la cuenta (aspirante), inicia sesión, configura su perfil, paga créditos y juega partidas. | Envía solicitud de alta, datos de acceso, pedidos de pago, de participación y de abandono, jugadas y consultas. Recibe confirmaciones, rechazos, resultados, listado de partidas y ranking. |
+| **Usuario No Registrado** | Persona que todavía no tiene cuenta: solicita el alta y debe pagarla para que la cuenta se dé de alta. Al completarse el alta pasa a ser Jugador. | Envía la solicitud de alta y el pago del alta. Recibe la confirmación del alta (o el rechazo por pago no aprobado). |
+| **Jugador** | Persona con cuenta: inicia sesión, configura su perfil, paga créditos y juega partidas. | Envía datos de acceso, pedidos de pago de créditos, de participación y de abandono, jugadas y consultas. Recibe confirmaciones, rechazos, listado de partidas y ranking. |
 | **Administrador** | Gestiona cuentas, suspende cuentas que incumplen las reglas y consulta partidas y ranking. | Envía gestión de cuentas, órdenes de suspensión y consultas. Recibe datos de cuentas, listado de partidas y ranking. |
-| **Medio de Pago** | Organización externa por la que el jugador abona sus créditos (cualquier medio de pago). | Recibe la solicitud de cobro y devuelve su aprobación o rechazo. |
+| **Medio de Pago** | Organización externa por la que se abona el alta de la cuenta y los créditos (cualquier medio de pago). | Recibe la solicitud de cobro y devuelve su aprobación o rechazo. |
 
 No son entidades (están dentro del sistema): **Partida**, **Historial** y **Ranking** son datos que el sistema guarda (almacenes), y **Redes Sociales**, **Documento**, **Alias** o **Avatar** son atributos de la cuenta.
 
@@ -111,9 +112,9 @@ No son entidades (están dentro del sistema): **Partida**, **Historial** y **Ran
 
 | N° | Proceso | Qué hace |
 | --- | --- | --- |
-| 1 | **Administrar Cuentas** | Alta de cuenta e inicio de sesión del Jugador; gestión de cuentas (perfil, consulta y modificación) por el Jugador y el Administrador. |
-| 2 | **Gestionar Pago de Créditos** | Pago de créditos con cualquier medio de pago y acreditación del saldo en la cuenta. |
-| 3 | **Gestionar Partidas** | Creación y unión a partidas, verificación de condiciones, registro de resultados y abandonos, cierre de la partida. |
+| 1 | **Administrar Cuentas** | Alta de cuenta del Usuario No Registrado (una vez acreditado el pago del alta) e inicio de sesión del Jugador; gestión de cuentas (perfil, consulta y modificación) por el Jugador y el Administrador. |
+| 2 | **Gestionar Pagos** | Cobro del alta de cuenta al Usuario No Registrado y pago de créditos del Jugador, con cualquier medio de pago; acreditación del saldo en la cuenta. |
+| 3 | **Gestionar Partidas** | Creación y unión a partidas, verificación de condiciones, registro de resultados y abandonos, cierre de la partida y actualización de historial y ranking. |
 | 4 | **Suspender Cuentas** | Suspensión temporal de cuentas que incumplen las reglas de la plataforma. |
 | 5 | **Consultar Historial y Ranking** | Consulta de las partidas realizadas y del ranking general. |
 
@@ -127,20 +128,20 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 
 | Flujo | Origen | Destino | Descripción |
 | --- | --- | --- | --- |
-| `Solicitud_Alta_Cuenta` | Jugador | Sistema (0) | Datos con los que una persona abre su cuenta (ver diccionario). |
+| `Solicitud_Alta_Cuenta` | Usuario No Registrado | Sistema (0) | Datos con los que una persona no registrada solicita abrir su cuenta (ver diccionario). |
+| `Pago_Alta_Cuenta` | Usuario No Registrado | Sistema (0) | Medio de pago elegido y datos del pago con el que la persona abona el alta de la cuenta. |
 | `Datos_Acceso` | Jugador | Sistema (0) | Datos con los que el jugador se identifica para iniciar sesión. |
 | `Solicitud_Gestión_Cuenta` | Jugador, Administrador | Sistema (0) | Pedido de configurar el perfil, consultar o modificar una cuenta. |
-| `Confirmación_Alta_Cuenta` | Sistema (0) | Jugador | Confirma la cuenta creada y habilita la opción de Pago de Créditos. |
+| `Confirmación_Alta_Cuenta` | Sistema (0) | Usuario No Registrado | Confirma la cuenta creada y habilita la opción de Pago de Créditos (o informa que no se dio de alta por pago rechazado). |
 | `Datos_Cuenta` | Sistema (0) | Jugador, Administrador | Datos de la cuenta consultada y confirmación de los cambios realizados. |
 | `Solicitud_Pago_Créditos` | Jugador | Sistema (0) | Cantidad de créditos a comprar y medio de pago elegido. |
 | `Resultado_Cobro` | Medio de Pago | Sistema (0) | Aprobación o rechazo del cobro informado por el medio de pago. |
-| `Solicitud_Cobro` | Sistema (0) | Medio de Pago | Datos del pago enviados al medio de pago elegido. |
+| `Solicitud_Cobro` | Sistema (0) | Medio de Pago | Datos del pago (alta de cuenta o créditos) enviados al medio de pago elegido. |
 | `Confirmación_Pago_Créditos` | Sistema (0) | Jugador | Confirma el pago y el nuevo saldo de créditos (o informa el rechazo). |
 | `Solicitud_Participación` | Jugador | Sistema (0) | Pedido de crear una partida o de unirse a una partida creada por otro jugador. |
 | `Solicitud_Abandono` | Jugador | Sistema (0) | Decisión del jugador de abandonar la partida (antes de que comience o durante el juego). |
 | `Jugadas` | Jugador | Sistema (0) | Acciones del jugador durante la partida. |
 | `Rechazo_Participación` | Sistema (0) | Jugador | Motivo por el que no se puede participar (sin lugares, cuenta suspendida o créditos insuficientes). |
-| `Resultado_Partida` | Sistema (0) | Jugador | Resultado obtenido por el jugador al finalizar la partida (o por abandono). |
 | `Orden_Suspensión` | Administrador | Sistema (0) | Cuenta a suspender, motivo y período de suspensión. |
 | `Consulta_Partidas` | Jugador, Administrador | Sistema (0) | Pedido de consulta de las partidas realizadas. |
 | `Consulta_Ranking` | Jugador, Administrador | Sistema (0) | Pedido de consulta del ranking general. |
@@ -149,9 +150,15 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 
 ##### Nivel 1
 
-Descompone el proceso 0 en 5 procesos y agrega los almacenamientos que comparten. Los 19 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior.
+Descompone el proceso 0 en 5 procesos y agrega los almacenamientos que comparten. Los 19 flujos externos del diagrama de contexto se conservan sin cambios (balanceo nivel 0 ↔ nivel 1); aquí se dibujan sin la entidad, como en la solución de la cátedra, y su origen o destino figura en la tabla anterior. Se agrega un flujo entre procesos, `Resultado_Pago_Alta` (2 → 1): el proceso 2 cobra el alta y le informa al proceso 1 si el pago fue aprobado, y recién entonces el proceso 1 da de alta la cuenta.
 
 ![Nivel 1 — Videojuego en Línea](diagramas/c1-nivel1.png)
+
+Flujo entre procesos de esta figura:
+
+| Flujo | De | A | Descripción |
+| --- | --- | --- | --- |
+| `Resultado_Pago_Alta` | 2 | 1 | Aprobación o rechazo del cobro del alta; la cuenta solo se da de alta si el pago fue aprobado. |
 
 | Almacén | Contenido | Escribe | Lee |
 | --- | --- | --- | --- |
@@ -174,7 +181,7 @@ Se detalla el proceso **3 Gestionar Partidas** por ser el que concentra las regl
 | 3.3 | **Verificar Condiciones de Inicio** | Verifica que los jugadores estén conectados y que se alcance el mínimo de participantes; habilita el comienzo de la partida. |
 | 3.4 | **Registrar Abandono** | Registra el abandono (antes del comienzo o durante el juego) y actualiza el resultado del jugador. |
 | 3.5 | **Registrar Resultados** | Registra los resultados obtenidos por cada jugador durante el juego. |
-| 3.6 | **Finalizar Partida** | Cierra la partida, actualiza el historial y el ranking, y comunica el resultado. |
+| 3.6 | **Finalizar Partida** | Cierra la partida y actualiza el historial y el ranking. |
 
 Flujos entre procesos de esta figura:
 
@@ -191,7 +198,6 @@ Flujos entre procesos de esta figura:
 | `Rechazo_Participación` | Salida | proceso 3 | 3.1 |
 | `Solicitud_Abandono` | Entrada | proceso 3 | 3.4 |
 | `Jugadas` | Entrada | proceso 3 | 3.5 |
-| `Resultado_Partida` | Salida | proceso 3 | 3.6 |
 
 Los almacenamientos del proceso 3 se repiten en la figura 3 con el mismo tipo de acceso y aparece además el almacén local `Partidas`, que no se muestra en el nivel 1 porque lo usan solo los subprocesos de esta figura:
 
@@ -245,14 +251,16 @@ Datos elementales (longitud y formato son propuestas de diseño: el enunciado so
 
 #### Supuestos
 
-- La persona que abre la cuenta y el jugador son el mismo rol, por eso hay una única entidad **Jugador**.
+- La persona que todavía no tiene cuenta es el **Usuario No Registrado**: solicita el alta y debe pagarla; una vez acreditado el pago la cuenta se da de alta y esa persona pasa a ser **Jugador**. Son entidades distintas porque interactúan con el sistema de forma diferente (el Usuario No Registrado solo puede solicitar y pagar el alta).
+- El **pago del alta** se hace con el mismo **Medio de Pago** que los créditos; si el pago es rechazado la cuenta no se da de alta. El importe del alta no se detalla en el enunciado y no se modela.
+- No se modela el resultado de la partida como flujo hacia el Jugador: el resultado se registra en el historial y el ranking, que el Jugador consulta con `Consulta_Partidas` y `Consulta_Ranking`.
 - **Medio de Pago** se incorpora como entidad externa porque el enunciado indica que el pago se realiza "a través de distintos medios de pago": hay alguien fuera del sistema que cobra y confirma.
 - Solo **Avatar** está marcado como optativo; por eso **Redes Sociales** se modela como obligatoria (al menos una de las opciones).
 - "Estar conectado" se representa con el almacén `Sesiones`, que se escribe al iniciar sesión y se lee al verificar las condiciones de inicio de la partida.
 - Esperar a que comience la partida no genera ningún flujo: solo el abandono es un dato nuevo.
 - El enunciado exige que el jugador "cuente con los créditos necesarios"; solo se verifica el saldo, no se modela un descuento porque no se indica.
 - Los tipos de documento `DNI | Pasaporte` son los del ejemplo de la cátedra.
-- Para no sobrecargar el contexto se omiten flujos que no agregan información propia: el resultado del inicio de sesión (la sesión queda registrada en `Sesiones`), el acceso del Administrador y el aviso de inicio de partida (el enunciado solo habla de sesión del Jugador y de que la partida "podrá comenzar") y la confirmación de la suspensión.
+- Para no sobrecargar el contexto se omiten flujos que no agregan información propia: el resultado del inicio de sesión (la sesión queda registrada en `Sesiones`), el acceso del Administrador y el aviso de inicio de partida y la notificación del resultado de la partida (el enunciado solo habla de sesión del Jugador y de que la partida "podrá comenzar") y la confirmación de la suspensión.
 
 ---
 

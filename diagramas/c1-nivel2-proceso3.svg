@@ -14,8 +14,6 @@
 <text x="-210.0" y="89.0" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Solicitud_Abandono</text>
 <line x1="-310.0" y1="240.0" x2="-72.0" y2="240.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
 <text x="-210.0" y="235.0" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Jugadas</text>
-<line x1="-72.0" y1="386.0" x2="-310.0" y2="386.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<text x="-210.0" y="381.0" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Resultado_Partida</text>
 <line x1="900.0" y1="128.6" x2="900.0" y2="182.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
 <text x="900.0" y="150.6" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Participación_Válida</text>
 <line x1="0.0" y1="286.0" x2="0.0" y2="340.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>

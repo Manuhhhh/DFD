@@ -102,7 +102,7 @@ Se solicita modelar el sistema considerando las distintas entidades involucradas
 | Entidad | Rol frente al sistema | Qué envía / qué recibe |
 | --- | --- | --- |
 | **Usuario No Registrado** | Persona que todavía no tiene cuenta: solicita el alta y debe pagarla para que la cuenta se dé de alta. Al completarse el alta pasa a ser Jugador. | Envía la solicitud de alta y el pago del alta. Recibe la confirmación del alta (o el rechazo por pago no aprobado). |
-| **Jugador** | Persona con cuenta: inicia sesión, configura su perfil, paga créditos y juega partidas. | Envía datos de acceso, pedidos de pago de créditos, de participación y de abandono, jugadas y consultas. Recibe confirmaciones, rechazos, listado de partidas y ranking. |
+| **Jugador** | Persona con cuenta: inicia sesión, configura su perfil, paga créditos y juega partidas. | Envía datos de acceso, pedidos de pago de créditos, de creación de partida, de unión a una partida y de abandono, y consultas. Recibe confirmaciones, rechazos, listado de partidas y ranking. |
 | **Administrador** | Gestiona cuentas, suspende cuentas que incumplen las reglas y consulta partidas y ranking. | Envía gestión de cuentas, órdenes de suspensión y consultas. Recibe datos de cuentas, listado de partidas y ranking. |
 | **Medio de Pago** | Organización externa por la que se abona el alta de la cuenta y los créditos (cualquier medio de pago). | Recibe la solicitud de cobro y devuelve su aprobación o rechazo. |
 
@@ -114,7 +114,7 @@ No son entidades (están dentro del sistema): **Partida**, **Historial** y **Ran
 | --- | --- | --- |
 | 1 | **Administrar Cuentas** | Alta de cuenta del Usuario No Registrado (una vez acreditado el pago del alta) e inicio de sesión del Jugador; gestión de cuentas (perfil, consulta y modificación) por el Jugador y el Administrador. |
 | 2 | **Gestionar Pagos** | Cobro del alta de cuenta al Usuario No Registrado y pago de créditos del Jugador, con cualquier medio de pago; acreditación del saldo en la cuenta. |
-| 3 | **Gestionar Partidas** | Creación y unión a partidas, verificación de condiciones, registro de resultados y abandonos, cierre de la partida y actualización de historial y ranking. |
+| 3 | **Gestionar Partidas** | Creación de partidas y unión a partidas creadas por otros jugadores, verificación de condiciones de inicio, registro de abandonos, cierre de la partida, registro de resultados y actualización de historial y ranking. |
 | 4 | **Suspender Cuentas** | Suspensión temporal de cuentas que incumplen las reglas de la plataforma. |
 | 5 | **Consultar Historial y Ranking** | Consulta de las partidas realizadas y del ranking general. |
 
@@ -138,10 +138,10 @@ Una sola burbuja numerada con **0** que representa todo el sistema, todas las en
 | `Resultado_Cobro` | Medio de Pago | Sistema (0) | Aprobación o rechazo del cobro informado por el medio de pago. |
 | `Solicitud_Cobro` | Sistema (0) | Medio de Pago | Datos del pago (alta de cuenta o créditos) enviados al medio de pago elegido. |
 | `Confirmación_Pago_Créditos` | Sistema (0) | Jugador | Confirma el pago y el nuevo saldo de créditos (o informa el rechazo). |
-| `Solicitud_Participación` | Jugador | Sistema (0) | Pedido de crear una partida o de unirse a una partida creada por otro jugador. |
+| `Solicitud_Crear_Partida` | Jugador | Sistema (0) | Pedido del jugador de crear una partida nueva. |
+| `Solicitud_Unirse_Partida` | Jugador | Sistema (0) | Pedido del jugador de unirse a una partida creada por otro jugador. |
 | `Solicitud_Abandono` | Jugador | Sistema (0) | Decisión del jugador de abandonar la partida (antes de que comience o durante el juego). |
-| `Jugadas` | Jugador | Sistema (0) | Acciones del jugador durante la partida. |
-| `Rechazo_Participación` | Sistema (0) | Jugador | Motivo por el que no se puede participar (sin lugares, cuenta suspendida o créditos insuficientes). |
+| `Rechazo_Participación` | Sistema (0) | Jugador | Motivo por el que no se puede crear la partida o unirse a ella (sin lugares, cuenta suspendida o créditos insuficientes). |
 | `Orden_Suspensión` | Administrador | Sistema (0) | Cuenta a suspender, motivo y período de suspensión. |
 | `Consulta_Partidas` | Jugador, Administrador | Sistema (0) | Pedido de consulta de las partidas realizadas. |
 | `Consulta_Ranking` | Jugador, Administrador | Sistema (0) | Pedido de consulta del ranking general. |
@@ -170,45 +170,39 @@ Flujo entre procesos de esta figura:
 
 ##### Nivel 2 — Figura 3: Gestionar Partidas
 
-Se detalla el proceso **3 Gestionar Partidas** por ser el que concentra las reglas del enunciado (lugares, suspensión, créditos, conexión, mínimo de participantes, abandono, resultados, historial y ranking). Se descompone en 6 subprocesos.
+Se detalla el proceso **3 Gestionar Partidas** por ser el que concentra las reglas del enunciado (lugares, suspensión, créditos, conexión, mínimo de participantes, abandono, resultados, historial y ranking). Se descompone en 5 subprocesos; participar se divide en **crear** una partida y **unirse** a una creada por otro jugador, que tienen reglas distintas.
 
 ![Nivel 2 — Figura 3: Gestionar Partidas](diagramas/c1-nivel2-proceso3.png)
 
 | N° | Proceso | Qué hace |
 | --- | --- | --- |
-| 3.1 | **Validar Participación** | Verifica lugares disponibles, que la cuenta no esté suspendida y que tenga créditos suficientes. |
-| 3.2 | **Registrar Participación** | Crea la partida o suma al jugador a una partida existente. |
+| 3.1 | **Crear Partida** | Verifica que la cuenta no esté suspendida y que tenga créditos suficientes, y crea la partida. |
+| 3.2 | **Unir Jugador a Partida** | Verifica que haya lugares disponibles, que la cuenta no esté suspendida y que tenga créditos suficientes, y suma al jugador a una partida creada por otro jugador. |
 | 3.3 | **Verificar Condiciones de Inicio** | Verifica que los jugadores estén conectados y que se alcance el mínimo de participantes; habilita el comienzo de la partida. |
 | 3.4 | **Registrar Abandono** | Registra el abandono (antes del comienzo o durante el juego) y actualiza el resultado del jugador. |
-| 3.5 | **Registrar Resultados** | Registra los resultados obtenidos por cada jugador durante el juego. |
-| 3.6 | **Finalizar Partida** | Cierra la partida y actualiza el historial y el ranking. |
+| 3.5 | **Finalizar Partida** | Registra los resultados obtenidos por cada jugador, cierra la partida y actualiza el historial y el ranking. |
 
-Flujos entre procesos de esta figura:
-
-| Flujo | De | A | Descripción |
-| --- | --- | --- | --- |
-| `Participación_Válida` | 3.1 | 3.2 | Pedido de participación que cumplió todas las condiciones. |
-| `Resultados_Jugadores` | 3.5 | 3.6 | Resultados finales obtenidos por cada jugador de la partida. |
+Esta figura no tiene flujos entre procesos: se comunican a través del almacén `Partidas`.
 
 **Balanceo nivel 1 ↔ nivel 2.** Los flujos que entran y salen del proceso 3 son exactamente los que entran y salen de la figura 3:
 
 | Flujo | Sentido | Nivel 1 | Nivel 2 |
 | --- | --- | --- | --- |
-| `Solicitud_Participación` | Entrada | proceso 3 | 3.1 |
-| `Rechazo_Participación` | Salida | proceso 3 | 3.1 |
+| `Solicitud_Crear_Partida` | Entrada | proceso 3 | 3.1 |
+| `Solicitud_Unirse_Partida` | Entrada | proceso 3 | 3.2 |
+| `Rechazo_Participación` | Salida | proceso 3 | 3.1, 3.2 |
 | `Solicitud_Abandono` | Entrada | proceso 3 | 3.4 |
-| `Jugadas` | Entrada | proceso 3 | 3.5 |
 
 Los almacenamientos del proceso 3 se repiten en la figura 3 con el mismo tipo de acceso y aparece además el almacén local `Partidas`, que no se muestra en el nivel 1 porque lo usan solo los subprocesos de esta figura:
 
 | Almacén | Nivel 1 (proceso 3) | Nivel 2 |
 | --- | --- | --- |
-| `Cuentas` | Lectura | Lectura (3.1) |
-| `Suspensiones` | Lectura | Lectura (3.1) |
+| `Cuentas` | Lectura | Lectura (3.1, 3.2) |
+| `Suspensiones` | Lectura | Lectura (3.1, 3.2) |
 | `Sesiones` | Lectura | Lectura (3.3) |
-| `Historial_Partidas` | Escritura | Escritura (3.6) |
-| `Ranking` | Lectura/Escritura | Lectura/Escritura (3.6) |
-| `Partidas` | — (almacén local) | Lectura/Escritura (3.1, 3.2, 3.3, 3.4, 3.5, 3.6) |
+| `Historial_Partidas` | Escritura | Escritura (3.5) |
+| `Ranking` | Lectura/Escritura | Lectura/Escritura (3.5) |
+| `Partidas` | — (almacén local) | Lectura/Escritura (3.1, 3.2, 3.3, 3.4, 3.5) |
 
 #### d. Diccionario de datos
 
@@ -257,7 +251,7 @@ Datos elementales (longitud y formato son propuestas de diseño: el enunciado so
 - **Medio de Pago** se incorpora como entidad externa porque el enunciado indica que el pago se realiza "a través de distintos medios de pago": hay alguien fuera del sistema que cobra y confirma.
 - Solo **Avatar** está marcado como optativo; por eso **Redes Sociales** se modela como obligatoria (al menos una de las opciones).
 - "Estar conectado" se representa con el almacén `Sesiones`, que se escribe al iniciar sesión y se lee al verificar las condiciones de inicio de la partida.
-- Esperar a que comience la partida no genera ningún flujo: solo el abandono es un dato nuevo.
+- Esperar a que comience la partida no genera ningún flujo: solo el abandono es un dato nuevo. Las acciones del jugador durante el juego no se modelan: el enunciado solo pide registrar los resultados.
 - El enunciado exige que el jugador "cuente con los créditos necesarios"; solo se verifica el saldo, no se modela un descuento porque no se indica.
 - Los tipos de documento `DNI | Pasaporte` son los del ejemplo de la cátedra.
 - Para no sobrecargar el contexto se omiten flujos que no agregan información propia: el resultado del inicio de sesión (la sesión queda registrada en `Sesiones`), el acceso del Administrador y el aviso de inicio de partida y la notificación del resultado de la partida (el enunciado solo habla de sesión del Jugador y de que la partida "podrá comenzar") y la confirmación de la suspensión.

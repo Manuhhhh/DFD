@@ -1,75 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-338 -35 1576 612" width="1576" height="612" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-338 -24 1576 562" width="1576" height="562" font-family="Helvetica, Arial, sans-serif">
 <title>Nivel 2 — Figura 3: Gestionar Partidas</title>
 <defs>
 <marker id="e" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9" refX="12" refY="4.5" orient="auto"><path d="M0,0 L12,4.5 L0,9 z" fill="#000"/></marker>
 <marker id="s" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9" refX="0" refY="4.5" orient="auto"><path d="M12,0 L0,4.5 L12,9 z" fill="#000"/></marker>
 </defs>
-<rect x="-338" y="-35" width="1576" height="612" fill="#fff"/>
-<text x="450.0" y="0.6" text-anchor="middle" font-size="18" font-weight="bold">Nivel 2 — Figura 3: Gestionar Partidas</text>
-<line x1="1210.0" y1="59.6" x2="974.9" y2="77.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<text x="1111.3" y="61.9" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Solicitud_Participación</text>
-<line x1="974.9" y1="88.2" x2="1210.0" y2="105.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<text x="1111.3" y="93.3" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Rechazo_Participación</text>
-<line x1="-310.0" y1="94.0" x2="-72.0" y2="94.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<text x="-210.0" y="89.0" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Solicitud_Abandono</text>
+<rect x="-338" y="-24" width="1576" height="562" fill="#fff"/>
+<text x="450.0" y="12.0" text-anchor="middle" font-size="18" font-weight="bold">Nivel 2 — Figura 3: Gestionar Partidas</text>
+<line x1="1210.0" y1="132.6" x2="974.9" y2="150.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<text x="1111.3" y="134.9" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Solicitud_Crear_Partida</text>
+<line x1="974.9" y1="161.2" x2="1210.0" y2="178.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<text x="1111.3" y="166.3" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Rechazo_Participación</text>
+<line x1="-310.0" y1="71.0" x2="-79.7" y2="88.1" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<text x="-213.3" y="73.2" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Solicitud_Unirse_Partida</text>
+<line x1="-79.7" y1="99.9" x2="-310.0" y2="117.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<text x="-213.3" y="104.8" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Rechazo_Participación</text>
 <line x1="-310.0" y1="240.0" x2="-72.0" y2="240.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<text x="-210.0" y="235.0" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Jugadas</text>
-<line x1="900.0" y1="128.6" x2="900.0" y2="182.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<text x="900.0" y="150.6" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Participación_Válida</text>
-<line x1="0.0" y1="286.0" x2="0.0" y2="340.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<text x="0.0" y="308.0" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Resultados_Jugadores</text>
-<line x1="505.0" y1="82.6" x2="824.5" y2="82.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<line x1="509.4" y1="146.8" x2="827.1" y2="94.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<line x1="493.9" y1="221.2" x2="834.1" y2="105.1" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<line x1="824.5" y1="229.9" x2="505.0" y2="235.3" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
-<line x1="505.0" y1="386.0" x2="819.6" y2="386.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<line x1="827.1" y1="361.7" x2="495.1" y2="251.2" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
-<line x1="64.5" y1="114.4" x2="402.5" y2="221.2" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
-<line x1="72.0" y1="239.4" x2="395.0" y2="236.7" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
-<line x1="63.9" y1="364.7" x2="404.9" y2="251.2" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
-<line x1="69.7" y1="397.5" x2="369.9" y2="446.8" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
-<line x1="64.0" y1="407.1" x2="404.4" y2="519.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
-<ellipse cx="900.0" cy="82.6" rx="75.5" ry="46.0" fill="#fff" stroke="#000" stroke-width="1.6"/>
-<text x="900.0" y="69.6" text-anchor="middle" font-weight="bold" font-size="13">3.1</text>
-<text x="900.0" y="86.6" text-anchor="middle" font-size="12">Validar</text>
-<text x="900.0" y="103.6" text-anchor="middle" font-size="12">Participación</text>
-<ellipse cx="900.0" cy="228.6" rx="75.5" ry="46.0" fill="#fff" stroke="#000" stroke-width="1.6"/>
-<text x="900.0" y="215.6" text-anchor="middle" font-weight="bold" font-size="13">3.2</text>
-<text x="900.0" y="232.6" text-anchor="middle" font-size="12">Registrar</text>
-<text x="900.0" y="249.6" text-anchor="middle" font-size="12">Participación</text>
-<ellipse cx="900.0" cy="386.0" rx="80.4" ry="57.4" fill="#fff" stroke="#000" stroke-width="1.6"/>
-<text x="900.0" y="364.5" text-anchor="middle" font-weight="bold" font-size="13">3.3</text>
-<text x="900.0" y="381.5" text-anchor="middle" font-size="12">Verificar</text>
-<text x="900.0" y="398.5" text-anchor="middle" font-size="12">Condiciones de</text>
-<text x="900.0" y="415.5" text-anchor="middle" font-size="12">Inicio</text>
-<ellipse cx="0.0" cy="94.0" rx="72.0" ry="46.0" fill="#fff" stroke="#000" stroke-width="1.6"/>
-<text x="0.0" y="81.0" text-anchor="middle" font-weight="bold" font-size="13">3.4</text>
-<text x="0.0" y="98.0" text-anchor="middle" font-size="12">Registrar</text>
-<text x="0.0" y="115.0" text-anchor="middle" font-size="12">Abandono</text>
+<text x="-210.0" y="235.0" text-anchor="middle" font-size="11" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Solicitud_Abandono</text>
+<line x1="505.0" y1="128.6" x2="825.0" y2="150.5" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<line x1="509.4" y1="193.1" x2="825.4" y2="162.8" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<line x1="830.6" y1="173.7" x2="505.0" y2="258.5" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<line x1="395.0" y1="121.0" x2="79.8" y2="99.5" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<line x1="390.6" y1="185.0" x2="74.4" y2="111.3" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<line x1="66.0" y1="120.2" x2="412.2" y2="257.8" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
+<line x1="505.0" y1="342.7" x2="820.1" y2="319.0" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<line x1="820.2" y1="305.9" x2="505.0" y2="277.7" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
+<line x1="71.5" y1="245.2" x2="395.0" y2="268.8" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
+<line x1="67.0" y1="369.1" x2="395.0" y2="286.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
+<line x1="71.5" y1="391.5" x2="369.9" y2="414.6" stroke="#000" stroke-width="1.3" marker-end="url(#e)"/>
+<line x1="67.3" y1="402.3" x2="395.0" y2="481.5" stroke="#000" stroke-width="1.3" marker-end="url(#e)" marker-start="url(#s)"/>
+<ellipse cx="900.0" cy="155.6" rx="75.5" ry="46.0" fill="#fff" stroke="#000" stroke-width="1.6"/>
+<text x="900.0" y="151.1" text-anchor="middle" font-weight="bold" font-size="13">3.1</text>
+<text x="900.0" y="168.1" text-anchor="middle" font-size="12">Crear Partida</text>
+<ellipse cx="0.0" cy="94.0" rx="80.4" ry="46.0" fill="#fff" stroke="#000" stroke-width="1.6"/>
+<text x="0.0" y="81.0" text-anchor="middle" font-weight="bold" font-size="13">3.2</text>
+<text x="0.0" y="98.0" text-anchor="middle" font-size="12">Unir Jugador a</text>
+<text x="0.0" y="115.0" text-anchor="middle" font-size="12">Partida</text>
+<ellipse cx="900.0" cy="313.0" rx="80.4" ry="57.4" fill="#fff" stroke="#000" stroke-width="1.6"/>
+<text x="900.0" y="291.5" text-anchor="middle" font-weight="bold" font-size="13">3.3</text>
+<text x="900.0" y="308.5" text-anchor="middle" font-size="12">Verificar</text>
+<text x="900.0" y="325.5" text-anchor="middle" font-size="12">Condiciones de</text>
+<text x="900.0" y="342.5" text-anchor="middle" font-size="12">Inicio</text>
 <ellipse cx="0.0" cy="240.0" rx="72.0" ry="46.0" fill="#fff" stroke="#000" stroke-width="1.6"/>
-<text x="0.0" y="227.0" text-anchor="middle" font-weight="bold" font-size="13">3.5</text>
+<text x="0.0" y="227.0" text-anchor="middle" font-weight="bold" font-size="13">3.4</text>
 <text x="0.0" y="244.0" text-anchor="middle" font-size="12">Registrar</text>
-<text x="0.0" y="261.0" text-anchor="middle" font-size="12">Resultados</text>
+<text x="0.0" y="261.0" text-anchor="middle" font-size="12">Abandono</text>
 <ellipse cx="0.0" cy="386.0" rx="72.0" ry="46.0" fill="#fff" stroke="#000" stroke-width="1.6"/>
-<text x="0.0" y="373.0" text-anchor="middle" font-weight="bold" font-size="13">3.6</text>
+<text x="0.0" y="373.0" text-anchor="middle" font-weight="bold" font-size="13">3.5</text>
 <text x="0.0" y="390.0" text-anchor="middle" font-size="12">Finalizar</text>
 <text x="0.0" y="407.0" text-anchor="middle" font-size="12">Partida</text>
-<line x1="395.0" y1="67.6" x2="505.0" y2="67.6" stroke="#000" stroke-width="1.6"/>
-<line x1="395.0" y1="97.6" x2="505.0" y2="97.6" stroke="#000" stroke-width="1.6"/>
-<text x="450.0" y="86.6" text-anchor="middle" font-size="12">Cuentas</text>
-<line x1="390.6" y1="141.6" x2="509.4" y2="141.6" stroke="#000" stroke-width="1.6"/>
-<line x1="390.6" y1="171.6" x2="509.4" y2="171.6" stroke="#000" stroke-width="1.6"/>
-<text x="450.0" y="160.6" text-anchor="middle" font-size="12">Suspensiones</text>
-<line x1="395.0" y1="371.0" x2="505.0" y2="371.0" stroke="#000" stroke-width="1.6"/>
-<line x1="395.0" y1="401.0" x2="505.0" y2="401.0" stroke="#000" stroke-width="1.6"/>
-<text x="450.0" y="390.0" text-anchor="middle" font-size="12">Sesiones</text>
-<line x1="369.9" y1="445.0" x2="530.1" y2="445.0" stroke="#000" stroke-width="1.6"/>
-<line x1="369.9" y1="475.0" x2="530.1" y2="475.0" stroke="#000" stroke-width="1.6"/>
-<text x="450.0" y="464.0" text-anchor="middle" font-size="12">Historial_Partidas</text>
-<line x1="395.0" y1="519.0" x2="505.0" y2="519.0" stroke="#000" stroke-width="1.6"/>
-<line x1="395.0" y1="549.0" x2="505.0" y2="549.0" stroke="#000" stroke-width="1.6"/>
-<text x="450.0" y="538.0" text-anchor="middle" font-size="12">Ranking</text>
-<line x1="395.0" y1="221.2" x2="505.0" y2="221.2" stroke="#000" stroke-width="1.6"/>
-<line x1="395.0" y1="251.2" x2="505.0" y2="251.2" stroke="#000" stroke-width="1.6"/>
-<text x="450.0" y="240.2" text-anchor="middle" font-size="12">Partidas</text>
+<line x1="395.0" y1="109.8" x2="505.0" y2="109.8" stroke="#000" stroke-width="1.6"/>
+<line x1="395.0" y1="139.8" x2="505.0" y2="139.8" stroke="#000" stroke-width="1.6"/>
+<text x="450.0" y="128.8" text-anchor="middle" font-size="12">Cuentas</text>
+<line x1="390.6" y1="183.8" x2="509.4" y2="183.8" stroke="#000" stroke-width="1.6"/>
+<line x1="390.6" y1="213.8" x2="509.4" y2="213.8" stroke="#000" stroke-width="1.6"/>
+<text x="450.0" y="202.8" text-anchor="middle" font-size="12">Suspensiones</text>
+<line x1="395.0" y1="331.8" x2="505.0" y2="331.8" stroke="#000" stroke-width="1.6"/>
+<line x1="395.0" y1="361.8" x2="505.0" y2="361.8" stroke="#000" stroke-width="1.6"/>
+<text x="450.0" y="350.8" text-anchor="middle" font-size="12">Sesiones</text>
+<line x1="369.9" y1="405.8" x2="530.1" y2="405.8" stroke="#000" stroke-width="1.6"/>
+<line x1="369.9" y1="435.8" x2="530.1" y2="435.8" stroke="#000" stroke-width="1.6"/>
+<text x="450.0" y="424.8" text-anchor="middle" font-size="12">Historial_Partidas</text>
+<line x1="395.0" y1="479.8" x2="505.0" y2="479.8" stroke="#000" stroke-width="1.6"/>
+<line x1="395.0" y1="509.8" x2="505.0" y2="509.8" stroke="#000" stroke-width="1.6"/>
+<text x="450.0" y="498.8" text-anchor="middle" font-size="12">Ranking</text>
+<line x1="395.0" y1="257.8" x2="505.0" y2="257.8" stroke="#000" stroke-width="1.6"/>
+<line x1="395.0" y1="287.8" x2="505.0" y2="287.8" stroke="#000" stroke-width="1.6"/>
+<text x="450.0" y="276.8" text-anchor="middle" font-size="12">Partidas</text>
 </svg>
